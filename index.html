@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor Viral</title>
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi7e9l65YeWLt7qnfGCJ_UvVW2Q5QsCpl3_PyH63gR858Vyx8aBze4r9P0cj5C3rCfts9CgjjG8fAbjVP-Pfilgf7kP60mxUjnpbXRiaDr92S4LfvgFwcxVPhiyveXK-dMCzahxgXNKMtzaccwT5ioW_5MSVCLKfRvSErGHgepplzNdHFo-ytlGJS6uMno/s320/Sabor%20Viral.jpg" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8V6gJf7fta647DOprajU3riFaPAR70jBZ5iOykU912zAgv7BSe02SxH0YsMDV9YFpCc3kj35Udgjo5TJxyYTP6oFk0M9t2gGJvdHDKBKAMUHePbI7IQZ9Us_rJmuMXTqtyHEsjwAOx72JG-mD5JmP3yluGTZEgJqIUBAhdZDHl_AtVP9QD7C12RVYhNE/s320/Sabor%20Viral2.png" alt="Sabor Viral Logo" class="header-logo">
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Nuestras Categorías</h2>
+        <div id="category-cards" class="menu-grid">
+        </div>
+
+        <div id="adiciones-button-container" style="text-align: center; margin-top: 20px; display: none;">
+            <button id="show-adiciones-btn" class="back-button">Ver Adiciones</button>
+        </div>
+
+        <h2 id="current-menu-title" class="section-title" style="display: none;"></h2>
+        <div id="menu-items" class="menu-grid">
+        </div>
+
+        <div class="contact-info">
+            <div class="contact-content">
+                <div class="contact-details">
+                    <h2>¡Encuéntranos!</h2>
+                    <p>📍 Dirección: Carrera 48A # 108A - 80 / Andalucia La Francia</p>
+                    <p>📱 WhatsApp: <a href="https://wa.me/573218663932" target="_blank"> +57 321 866 3932</a></p>
+                    <p>⏰ Horario: Jueves a Domingo de 04:00 PM - 12:00 AM</p>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3965.7349575926855!2d-75.553815!3d6.2985174!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e442f37e2323dfb%3A0x79f2edb616c21c2c!2sCra.%2048a%20%23108a-80%2C%20Andalucia%2C%20Medell%C3%ADn%2C%20Santa%20Cruz%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1752672763815!5m2!1ses-419!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Sabor Viral. Todos los derechos reservados.</p>
+        <p>Desarrollado por: Jhon Loaiza - Tecnologo en Analisis y Desarrollo de Software</p>
+        <p>📱 WhatsApp: <a href="https://wa.me/573003024889" target="_blank"> +57 300 302 4889</a></p>
+    </footer>
+
+    <div class="floating-buttons">
+        <div id="scrollToTopBtn" class="scroll-to-top-btn">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        <div id="cartBtn" class="cart-btn">
+            <i class="fas fa-utensils"></i>
+            <span id="cartCount" class="cart-count">0</span>
+        </div>
+        <div id="whatsappBtn" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+    </div>
+
+    <!-- Modal para agregar producto al carrito -->
+    <div id="addToCartModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalProductName"></h2>
+            <p id="modalProductPrice" class="modal-price"></p>
+            
+            <div class="modal-section">
+                <h3>Salsas</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="Rosada"> Rosada</label>
+                    <label><input type="checkbox" value="Piña"> Piña</label>
+                    <label><input type="checkbox" value="BBQ"> BBQ</label>
+                    <label><input type="checkbox" value="Mayonesa"> Mayonesa</label>
+                    <label><input type="checkbox" value="Mostaza"> Mostaza</label>
+                    <label><input type="checkbox" value="Ketchup"> Ketchup</label>
+                    <label><input type="checkbox" value="Aguacate"> Aguacate</label>
+                    <label><input type="checkbox" value="Ninguna"> Ninguna</label>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>Adiciones</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="Carne desmechada"> Carne desmechada (+$4.000)</label>
+                    <label><input type="checkbox" value="Carne de hamburguesa"> Carne de hamburguesa (+$2.500)</label>
+                    <label><input type="checkbox" value="Chorizo coctelero"> Chorizo coctelero (+$800)</label>
+                    <label><input type="checkbox" value="Huevo de codorniz"> Huevo de codorniz (+$600)</label>
+                    <label><input type="checkbox" value="Queso"> Queso (+$3.000)</label>
+                    <label><input type="checkbox" value="Tocineta"> Tocineta (+$3.000)</label>
+                    <label><input type="checkbox" value="Ninguna"> Ninguna</label>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>Quitar ingredientes</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="Tomate"> Tomate</label>
+                    <label><input type="checkbox" value="Lechuga"> Lechuga</label>
+                    <label><input type="checkbox" value="Cebolla"> Cebolla</label>
+                    <label><input type="checkbox" value="Queso"> Queso</label>
+                    <label><input type="checkbox" value="Ninguno"> Ninguno</label>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>Cantidad</h3>
+                <div class="quantity-controls">
+                    <button id="decreaseQuantity" class="quantity-btn">-</button>
+                    <span id="quantityDisplay">1</span>
+                    <button id="increaseQuantity" class="quantity-btn">+</button>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="addToCartBtn" class="add-to-cart-btn">Agregar al Carrito</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para jugos (solo agua/leche y cantidad) -->
+    <div id="jugosModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="jugosModalProductName"></h2>
+            <p id="jugosModalProductPrice" class="modal-price"></p>
+            
+            <div class="modal-section">
+                <h3>Tipo de preparación</h3>
+                <div class="radio-group">
+                    <label><input type="radio" name="jugoType" value="Agua" checked> Agua</label>
+                    <label><input type="radio" name="jugoType" value="Leche"> Leche</label>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>Cantidad</h3>
+                <div class="quantity-controls">
+                    <button id="decreaseJugosQuantity" class="quantity-btn">-</button>
+                    <span id="jugosQuantityDisplay">1</span>
+                    <button id="increaseJugosQuantity" class="quantity-btn">+</button>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="addJugosToCartBtn" class="add-to-cart-btn">Agregar al Carrito</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para otras bebidas (solo cantidad) -->
+    <div id="bebidasModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="bebidasModalProductName"></h2>
+            <p id="bebidasModalProductPrice" class="modal-price"></p>
+            
+            <div class="modal-section">
+                <h3>Cantidad</h3>
+                <div class="quantity-controls">
+                    <button id="decreaseBebidasQuantity" class="quantity-btn">-</button>
+                    <span id="bebidasQuantityDisplay">1</span>
+                    <button id="increaseBebidasQuantity" class="quantity-btn">+</button>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="addBebidasToCartBtn" class="add-to-cart-btn">Agregar al Carrito</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal del carrito -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content cart-modal">
+            <span class="close">&times;</span>
+            <h2>🛒 Tu Pedido</h2>
+            
+            <div id="cartItems" class="cart-items">
+                <!-- Los items del carrito se mostrarán aquí -->
+            </div>
+
+            <div class="customer-info">
+                <h3>📋 Información de Entrega</h3>
+                <div class="form-group">
+                    <label for="customerName">Nombre completo:</label>
+                    <input type="text" id="customerName" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Teléfono:</label>
+                    <input type="tel" id="customerPhone" placeholder="300 123 4567" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Dirección de entrega:</label>
+                    <textarea id="customerAddress" placeholder="Cll 56 # 62-67 Int 106, Barrio, Ciudad" required></textarea>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h3>📊 Resumen del Pedido</h3>
+                <div id="orderSummary" class="order-summary">
+                    <!-- El resumen se generará aquí -->
+                </div>
+                <div id="cartTotal" class="cart-total">
+                    <strong>Total: $0</strong>
+                </div>
+            </div>
+
+            <div class="cart-actions">
+                <button id="clearCartBtn" class="clear-cart-btn">Limpiar Carrito</button>
+                <button id="sendWhatsAppBtn" class="send-whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Protecciones contra inspección de código
+        document.addEventListener('contextmenu', function(e) {
+            // Permitir clic derecho en botones flotantes
+            if (e.target.closest('.floating-buttons')) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            // Bloquear Ctrl+Shift+I (Inspeccionar elemento)
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                return false;
+            }
+            // Bloquear Ctrl+Shift+C (Inspeccionar elemento)
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                return false;
+            }
+            // Bloquear Ctrl+U (Ver código fuente)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                return false;
+            }
+            // Bloquear F12
+            if (e.key === 'F12') {
+                e.preventDefault();
+                return false;
+            }
+            // Bloquear Ctrl+Shift+J (Consola)
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Bloquear DevTools (versión mejorada)
+        function detectDevTools() {
+            // Solo verificar si las dimensiones son significativamente diferentes
+            const widthDiff = window.outerWidth - window.innerWidth;
+            const heightDiff = window.outerHeight - window.innerHeight;
+            
+            // Umbral más alto para evitar falsos positivos
+            const threshold = 200;
+            
+            // Solo bloquear si hay una diferencia muy grande (indicando DevTools abierto)
+            if (widthDiff > threshold || heightDiff > threshold) {
+                // Verificar múltiples veces antes de bloquear
+                setTimeout(() => {
+                    const newWidthDiff = window.outerWidth - window.innerWidth;
+                    const newHeightDiff = window.outerHeight - window.innerHeight;
+                    
+                    if (newWidthDiff > threshold || newHeightDiff > threshold) {
+                        document.body.innerHTML = 'Acceso no autorizado';
+                    }
+                }, 500);
+            }
+        }
+
+        // Verificar cada 2 segundos en lugar de cada 100ms
+        setInterval(detectDevTools, 2000);
+
+        // Bloquear selección de texto (permitir en botones flotantes)
+        document.addEventListener('selectstart', function(e) {
+            if (e.target.closest('.floating-buttons')) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+
+        // Bloquear arrastrar elementos (permitir en botones flotantes)
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.closest('.floating-buttons')) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
