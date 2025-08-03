@@ -486,7 +486,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const addBebidasToCartBtn = document.getElementById('addBebidasToCartBtn');
     
     const cartItems = document.getElementById('cartItems');
-    const orderSummary = document.getElementById('orderSummary');
     const clearCartBtn = document.getElementById('clearCartBtn');
     const sendWhatsAppBtn = document.getElementById('sendWhatsAppBtn');
     const customerName = document.getElementById('customerName');
@@ -778,19 +777,43 @@ document.addEventListener('DOMContentLoaded', function() {
     function addToCart() {
         if (!currentProduct) return;
 
-        const selectedSalsas = Array.from(addToCartModal.querySelectorAll('input[value*="Rosada"], input[value*="Piña"], input[value*="BBQ"], input[value*="Mayonesa"], input[value*="Mostaza"], input[value*="Ketchup"], input[value*="Aguacate"]:checked')).map(cb => cb.value);
-        const selectedAdiciones = Array.from(addToCartModal.querySelectorAll('input[value*="Carne desmechada"], input[value*="Carne de hamburguesa"], input[value*="Chorizo coctelero"], input[value*="Huevo de codorniz"], input[value*="Queso"], input[value*="Tocineta"]:checked')).map(cb => cb.value);
-        const selectedQuitar = Array.from(addToCartModal.querySelectorAll('input[value*="Tomate"], input[value*="Lechuga"], input[value*="Cebolla"], input[value*="Queso"]:checked')).map(cb => cb.value);
+        // Capturar todas las selecciones de manera más directa y confiable
+        const allCheckboxes = addToCartModal.querySelectorAll('input[type="checkbox"]:checked');
+        
+        const selectedSalsas = [];
+        const selectedAdiciones = [];
+        const selectedQuitar = [];
+
+        allCheckboxes.forEach(checkbox => {
+            const value = checkbox.value;
+            
+            // Categorizar según el valor del checkbox
+            if (['Rosada', 'Piña', 'BBQ', 'Mayonesa', 'Mostaza', 'Ketchup', 'Aguacate'].includes(value)) {
+                if (value !== 'Ninguna') {
+                    selectedSalsas.push(value);
+                }
+            } else if (['Carne desmechada', 'Carne de hamburguesa', 'Chorizo coctelero', 'Huevo de codorniz', 'Queso', 'Tocineta'].includes(value)) {
+                if (value !== 'Ninguna') {
+                    selectedAdiciones.push(value);
+                }
+            } else if (['Tomate', 'Lechuga', 'Cebolla', 'Queso'].includes(value)) {
+                if (value !== 'Ninguno') {
+                    selectedQuitar.push(value);
+                }
+            }
+        });
 
         const cartItem = {
             id: Date.now(),
             product: currentProduct,
             quantity: currentQuantity,
-            salsas: selectedSalsas.length > 0 ? selectedSalsas : ['Ninguna'],
-            adiciones: selectedAdiciones.length > 0 ? selectedAdiciones : ['Ninguna'],
-            quitar: selectedQuitar.length > 0 ? selectedQuitar : ['Ninguno'],
+            salsas: selectedSalsas,
+            adiciones: selectedAdiciones,
+            quitar: selectedQuitar,
             tipo: null
         };
+
+
 
         cart.push(cartItem);
         updateCartCount();
@@ -798,6 +821,15 @@ document.addEventListener('DOMContentLoaded', function() {
         closeModal(addToCartModal);
         
         showNotification('Producto agregado al carrito');
+        
+        // Ir a la página principal
+        showCategories();
+        
+        // Hacer scroll a la parte superior
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
     function addJugosToCart() {
@@ -821,6 +853,15 @@ document.addEventListener('DOMContentLoaded', function() {
         closeModal(jugosModal);
         
         showNotification('Jugo agregado al carrito');
+        
+        // Ir a la página principal
+        showCategories();
+        
+        // Hacer scroll a la parte superior
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
     function addBebidasToCart() {
@@ -842,6 +883,15 @@ document.addEventListener('DOMContentLoaded', function() {
         closeModal(bebidasModal);
         
         showNotification('Bebida agregada al carrito');
+        
+        // Ir a la página principal
+        showCategories();
+        
+        // Hacer scroll a la parte superior
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
     function updateCartCount() {
@@ -907,12 +957,19 @@ document.addEventListener('DOMContentLoaded', function() {
             let details = '';
             if (item.tipo) {
                 details = `Tipo: ${item.tipo}`;
-            } else if (item.salsas[0] !== 'No aplica') {
-                details = `
-                    Salsas: ${item.salsas.join(', ')}<br>
-                    Adiciones: ${item.adiciones.join(', ')}<br>
-                    Quitar: ${item.quitar.join(', ')}
-                `;
+            } else if (item.salsas.length > 0 || item.adiciones.length > 0 || item.quitar.length > 0) {
+                // Mostrar solo las opciones que realmente están seleccionadas
+                if (item.salsas.length > 0) {
+                    details += `Salsas: ${item.salsas.join(', ')}<br>`;
+                }
+                if (item.adiciones.length > 0) {
+                    details += `Adiciones: ${item.adiciones.join(', ')}<br>`;
+                }
+                if (item.quitar.length > 0) {
+                    details += `Quitar: ${item.quitar.join(', ')}<br>`;
+                }
+            } else {
+                details = 'Sin personalizaciones';
             }
             
             cartItemDiv.innerHTML = `
@@ -934,36 +991,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCartTotal();
     }
 
-    function generateOrderSummary() {
-        if (cart.length === 0) {
-            orderSummary.innerHTML = '<p>No hay productos en el carrito</p>';
-            return;
-        }
 
-        let summary = '';
-        cart.forEach((item, index) => {
-            let price = item.product.price;
-            if (item.product.priceAgua && item.product.priceLeche) {
-                price = item.tipo === 'Leche' ? item.product.priceLeche : item.product.priceAgua;
-            }
-            
-            summary += `<strong>${index + 1}. ${item.product.name}</strong><br>`;
-            summary += `Cantidad: ${item.quantity}<br>`;
-            
-            if (item.tipo) {
-                summary += `Tipo: ${item.tipo}<br>`;
-            } else if (item.salsas[0] !== 'No aplica') {
-                summary += `Salsas: ${item.salsas.join(', ')}<br>`;
-                summary += `Adiciones: ${item.adiciones.join(', ')}<br>`;
-                summary += `Quitar: ${item.quitar.join(', ')}<br>`;
-            }
-            
-            summary += `Precio: ${price}<br><br>`;
-        });
-
-        orderSummary.innerHTML = summary;
-        updateCartTotal();
-    }
 
     function sendWhatsApp() {
         if (cart.length === 0) {
@@ -976,36 +1004,56 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        let message = `Buen día,\n\n`;
+        let message = `Hola, Sabor Viral\n\n`;
         message += `Nombre: ${customerName.value}\n`;
         message += `Teléfono: ${customerPhone.value}\n`;
         message += `Dirección: ${customerAddress.value}\n\n`;
 
         cart.forEach((item, index) => {
-            let price = item.product.price;
-            if (item.product.priceAgua && item.product.priceLeche) {
-                price = item.tipo === 'Leche' ? item.product.priceLeche : item.product.priceAgua;
+            // Determinar el tipo de producto para el mensaje
+            let productType = '';
+            if (item.product.category === 'comidas-rapidas' || item.product.category === 'adiciones') {
+                productType = 'Comida Rápida';
+            } else if (item.product.category === 'jugos') {
+                productType = 'Bebida';
+            } else if (item.product.category === 'otras-bebidas') {
+                productType = 'Bebida';
             }
             
-            message += `${index + 1}. ${item.product.name}\n`;
+            message += `${index + 1}. ${productType}: ${item.product.name}\n`;
             message += `Cantidad: ${item.quantity}\n`;
             
             if (item.tipo) {
                 message += `Tipo: ${item.tipo}\n`;
-            } else if (item.salsas[0] !== 'No aplica') {
-                message += `Salsas: ${item.salsas.join(', ')}\n`;
-                message += `Adiciones: ${item.adiciones.join(', ')}\n`;
-                message += `Quitar: ${item.quitar.join(', ')}\n`;
+            } else if (item.salsas.length > 0 || item.adiciones.length > 0 || item.quitar.length > 0) {
+                // Mostrar solo las opciones que realmente están seleccionadas
+                if (item.salsas.length > 0) {
+                    message += `Salsas: ${item.salsas.join(', ')}\n`;
+                }
+                if (item.adiciones.length > 0) {
+                    message += `Adiciones: ${item.adiciones.join(', ')}\n`;
+                }
+                if (item.quitar.length > 0) {
+                    message += `Quitar: ${item.quitar.join(', ')}\n`;
+                }
+            } else {
+                message += `Sin personalizaciones\n`;
             }
             
-            message += `Precio: ${price}\n\n`;
+            message += `\n`;
         });
 
+        // Agregar el total del pedido
+        const total = calculateCartTotal();
+        message += `💰 *TOTAL DEL PEDIDO: $${total.toLocaleString()}* 💰\n\n`;
         message += `Muchas gracias`;
 
         const phoneNumber = '573218663932';
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
+
+        // Reiniciar formulario y limpiar carrito
+        resetFormAndGoHome();
     }
 
     function showNotification(message) {
@@ -1027,13 +1075,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setTimeout(() => {
             notification.remove();
-        }, 3000);
+        }, 1500);
+    }
+
+    function resetFormAndGoHome() {
+        // Limpiar el carrito
+        cart = [];
+        updateCartCount();
+        updateCartDisplay();
+        updateCartTotal();
+        
+        // Cerrar el modal del carrito
+        closeModal(cartModal);
+        
+        // Limpiar el formulario
+        customerName.value = '';
+        customerPhone.value = '';
+        customerAddress.value = '';
+        
+        // Mostrar notificación de éxito
+        showNotification('¡Pedido enviado exitosamente!');
+        
+        // Ir a la página principal
+        showCategories();
+        
+        // Hacer scroll a la parte superior
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
     // Event listeners
     cartBtn.addEventListener('click', () => {
         updateCartDisplay();
-        generateOrderSummary();
         cartModal.style.display = 'block';
         
         // Asegurar que el modal siempre se muestre desde arriba
@@ -1156,12 +1231,25 @@ document.addEventListener('DOMContentLoaded', function() {
         window.scrollTo(0, 0);
     });
 
-    // Bloqueo de clic derecho y atajos de teclado
+    // Bloqueo de clic derecho y atajos de teclado - PERMITIR EN CAMPOS DE FORMULARIO
     document.addEventListener('contextmenu', function(e) {
+        // Permitir clic derecho en campos de formulario
+        if (e.target.closest('.customer-info') || 
+            e.target.closest('input') || 
+            e.target.closest('textarea')) {
+            return true;
+        }
         e.preventDefault();
     });
 
     document.addEventListener('keydown', function(e) {
+        // Permitir todas las teclas en campos de formulario
+        if (e.target.closest('.customer-info') || 
+            e.target.closest('input') || 
+            e.target.closest('textarea')) {
+            return true;
+        }
+        
         if (e.key === 'F12') { e.preventDefault(); }
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'I') { e.preventDefault(); }
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'J') { e.preventDefault(); }

@@ -753,14 +753,15 @@ footer {
 }
 
 .cart-total {
-    margin-top: 12px; /* Reducido de 15px a 12px */
-    padding: 12px; /* Reducido de 15px a 12px */
+    margin: 20px 0;
+    padding: 15px;
     background-color: var(--secondary-color);
     border-radius: 8px;
     text-align: center;
-    font-size: 1.1em; /* Reducido de 1.2em a 1.1em */
+    font-size: 1.2em;
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
+    font-weight: bold;
 }
 
 .cart-actions {
@@ -1055,9 +1056,9 @@ footer {
     }
 
     .cart-total {
-        margin-top: 8px; /* Más compacto */
-        padding: 8px; /* Más compacto */
-        font-size: 0.95em; /* Más pequeño */
+        margin: 15px 0;
+        padding: 12px;
+        font-size: 1.1em;
     }
 
     /* Hacer el carrito más compacto en móvil */
@@ -1242,8 +1243,9 @@ footer {
     }
 
     .cart-total {
-        padding: 6px; /* Aún más compacto */
-        font-size: 0.9em; /* Aún más pequeño */
+        margin: 12px 0;
+        padding: 10px;
+        font-size: 1em;
     }
 
     .cart-item {
@@ -1275,5 +1277,191 @@ footer {
     .form-group textarea {
         padding: 4px; /* Aún más compacto */
         font-size: 0.8em; /* Aún más pequeño */
+    }
+}
+
+/* Mejoras específicas para móviles */
+@media (max-width: 768px) {
+    /* Mejoras para campos de formulario en móvil */
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 5px rgba(85, 255, 0, 0.3);
+    }
+
+    /* Mejorar la legibilidad del carrito en móvil */
+    .cart-item-info {
+        flex: 1;
+        min-width: 0; /* Permitir que se encoja */
+    }
+
+    .cart-item-name {
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 3px;
+        word-wrap: break-word;
+    }
+
+    .cart-item-details {
+        font-size: 0.85em;
+        color: #666;
+        margin-bottom: 3px;
+        line-height: 1.3;
+    }
+
+    .cart-item-price {
+        font-weight: bold;
+        color: var(--secondary-color);
+        font-size: 0.9em;
+    }
+
+    /* Mejorar botones en móvil */
+    .remove-item-btn {
+        background-color: #ff4444;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        flex-shrink: 0; /* No permitir que se encoja */
+    }
+
+    .remove-item-btn:hover {
+        background-color: #cc0000;
+    }
+
+    /* Mejorar el resumen del pedido en móvil */
+    .order-summary {
+        font-size: 0.9em;
+        line-height: 1.4;
+    }
+
+    .order-summary strong {
+        color: var(--primary-color);
+    }
+
+    /* Mejorar la navegación en móvil */
+    .back-button {
+        padding: 12px 20px;
+        font-size: 1em;
+        margin: 8px;
+    }
+
+    /* Mejorar el header en móvil */
+    .header-logo {
+        width: 180px;
+        height: 180px;
+    }
+
+    /* Mejorar el contenedor principal en móvil */
+    .container {
+        padding: 0 0.5em;
+    }
+
+    /* Mejorar las tarjetas de categoría en móvil */
+    .category-card {
+        width: 120px;
+        height: 150px;
+    }
+
+    .category-card h3 {
+        font-size: 1em;
+    }
+
+    .category-icon-wrapper {
+        height: 70px;
+    }
+
+    .category-icon-wrapper .fas {
+        font-size: 1.8em;
+    }
+}
+
+/* Mejoras específicas para móviles muy pequeños */
+@media (max-width: 480px) {
+    /* Mejorar campos de formulario en móviles pequeños */
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px; /* Evitar zoom en iOS */
+        padding: 8px;
+    }
+
+    /* Mejorar el carrito en móviles pequeños */
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .cart-item-actions {
+        align-self: flex-end;
+    }
+
+    /* Mejorar botones flotantes en móviles pequeños */
+    .floating-buttons {
+        bottom: 15px;
+        right: 15px;
+        gap: 6px;
+    }
+
+    .scroll-to-top-btn,
+    .whatsapp-btn,
+    .cart-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+
+    /* Mejorar modales en móviles pequeños */
+    .modal-content {
+        margin: 1% auto;
+        width: 98%;
+        padding: 10px;
+        max-height: 95vh;
+    }
+
+    /* Mejorar checkboxes en móviles pequeños */
+    .checkbox-group {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+    }
+
+    .checkbox-group label {
+        font-size: 0.75em;
+        padding: 3px;
+        min-height: 35px;
+    }
+
+    /* Mejorar el header en móviles pequeños */
+    .header-logo {
+        width: 150px;
+        height: 150px;
+    }
+
+    /* Mejorar el título en móviles pequeños */
+    .section-title {
+        font-size: 1.6em;
+        margin-bottom: 0.8em;
+    }
+
+    /* Mejorar las tarjetas de categoría en móviles pequeños */
+    .category-card {
+        width: 100px;
+        height: 130px;
+    }
+
+    .category-card h3 {
+        font-size: 0.9em;
+    }
+
+    .category-icon-wrapper {
+        height: 60px;
+    }
+
+    .category-icon-wrapper .fas {
+        font-size: 1.5em;
     }
 }

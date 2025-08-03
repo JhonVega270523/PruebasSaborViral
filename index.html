@@ -200,14 +200,8 @@
                 </div>
             </div>
 
-            <div class="cart-summary">
-                <h3>📊 Resumen del Pedido</h3>
-                <div id="orderSummary" class="order-summary">
-                    <!-- El resumen se generará aquí -->
-                </div>
-                <div id="cartTotal" class="cart-total">
-                    <strong>Total: $0</strong>
-                </div>
+            <div id="cartTotal" class="cart-total" style="text-align: center; margin: 20px 0; font-size: 1.2em;">
+                <strong>Total: $0</strong>
             </div>
 
             <div class="cart-actions">
@@ -220,10 +214,13 @@
     </div>
 
     <script>
-        // Protecciones contra inspección de código
+        // Protecciones contra inspección de código - PERMITIR INTERACCIÓN EN CAMPOS DE FORMULARIO
         document.addEventListener('contextmenu', function(e) {
-            // Permitir clic derecho en botones flotantes
-            if (e.target.closest('.floating-buttons')) {
+            // Permitir clic derecho en botones flotantes y campos de formulario
+            if (e.target.closest('.floating-buttons') || 
+                e.target.closest('.customer-info') || 
+                e.target.closest('input') || 
+                e.target.closest('textarea')) {
                 return true;
             }
             e.preventDefault();
@@ -231,6 +228,13 @@
         });
 
         document.addEventListener('keydown', function(e) {
+            // Permitir todas las teclas en campos de formulario
+            if (e.target.closest('.customer-info') || 
+                e.target.closest('input') || 
+                e.target.closest('textarea')) {
+                return true;
+            }
+            
             // Bloquear Ctrl+Shift+I (Inspeccionar elemento)
             if (e.ctrlKey && e.shiftKey && e.key === 'I') {
                 e.preventDefault();
@@ -284,18 +288,24 @@
         // Verificar cada 2 segundos en lugar de cada 100ms
         setInterval(detectDevTools, 2000);
 
-        // Bloquear selección de texto (permitir en botones flotantes)
+        // Bloquear selección de texto (permitir en botones flotantes y campos de formulario)
         document.addEventListener('selectstart', function(e) {
-            if (e.target.closest('.floating-buttons')) {
+            if (e.target.closest('.floating-buttons') || 
+                e.target.closest('.customer-info') || 
+                e.target.closest('input') || 
+                e.target.closest('textarea')) {
                 return true;
             }
             e.preventDefault();
             return false;
         });
 
-        // Bloquear arrastrar elementos (permitir en botones flotantes)
+        // Bloquear arrastrar elementos (permitir en botones flotantes y campos de formulario)
         document.addEventListener('dragstart', function(e) {
-            if (e.target.closest('.floating-buttons')) {
+            if (e.target.closest('.floating-buttons') || 
+                e.target.closest('.customer-info') || 
+                e.target.closest('input') || 
+                e.target.closest('textarea')) {
                 return true;
             }
             e.preventDefault();
